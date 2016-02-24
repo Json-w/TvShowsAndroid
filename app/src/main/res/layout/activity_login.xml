@@ -17,6 +17,7 @@
             android:layout_height="50dp"
             android:hint="@string/hintUsername" />
 
+
         <EditText
             android:id="@+id/loginPassword"
             android:layout_width="match_parent"

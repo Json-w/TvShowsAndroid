@@ -13,7 +13,7 @@ import com.example.jason.helloworld.activities.MainActivity;
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private final int PAGER_COUNT = 4;
-    private MyFragment1 myFragment1 = null;
+    private LatestTvShowsFragment latestTvShowsFragment = null;
     private MyFragment2 myFragment2 = null;
     private MyFragment3 myFragment3 = null;
     private PersonnalFragment personnalFragment = null;
@@ -21,7 +21,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
-        myFragment1 = new MyFragment1();
+        latestTvShowsFragment = new LatestTvShowsFragment();
         myFragment2 = new MyFragment2();
         myFragment3 = new MyFragment3();
         personnalFragment = new PersonnalFragment();
@@ -49,7 +49,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case MainActivity.PAGE_ONE:
-                fragment = myFragment1;
+                fragment = latestTvShowsFragment;
                 break;
             case MainActivity.PAGE_TWO:
                 fragment = myFragment2;
