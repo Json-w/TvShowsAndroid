@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.adapters.LatestTvShowRefreshAdapter;
 import com.example.jason.helloworld.common.TvShowsUrl;
+import com.example.jason.helloworld.model.Page;
 import com.example.jason.helloworld.model.TvShowItem;
 import com.example.jason.helloworld.widget.XListView;
 
@@ -42,12 +43,14 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
     private int mIndex = 0;
     private int mRefreshIndex = 0;
     private RequestQueue requestQueue;
+    private Page page = new Page();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.act_list_view, container, false);
         requestQueue = Volley.newRequestQueue(getContext());
-        fetchDataFromInternet();
+        fetchDataFromInternet(page);
         geneItems();
         initView(view);
         return view;
@@ -65,37 +68,52 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
         mListView.setRefreshTime(getTime());
 
         mAdapter = new ArrayAdapter<String>(getContext(), R.layout.vw_list_item, items);
-        myAdapter = new LatestTvShowRefreshAdapter(tvShowItems);
+        myAdapter = new LatestTvShowRefreshAdapter(tvShowItems, requestQueue);
 //        mListView.setAdapter(mAdapter);
         mListView.setAdapter(myAdapter);
     }
 
     @Override
     public void onRefresh() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mIndex = ++mRefreshIndex;
-                items.clear();
-                geneItems();
-                mAdapter = new ArrayAdapter<String>(getContext(), R.layout.vw_list_item,
-                        items);
-                mListView.setAdapter(mAdapter);
-                onLoad();
-            }
-        }, 2500);
+        tvShowItems.clear();
+        page = new Page();
+        fetchDataFromInternet(page);
+        myAdapter = new LatestTvShowRefreshAdapter(tvShowItems, requestQueue);
+        mListView.setAdapter(myAdapter);
+        onLoad();
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mIndex = ++mRefreshIndex;
+//                items.clear();
+//                geneItems();
+//                mAdapter = new ArrayAdapter<String>(getContext(), R.layout.vw_list_item,
+//                        items);
+//                mListView.setAdapter(mAdapter);
+//                onLoad();
+//            }
+//        }, 2500);
     }
 
     @Override
     public void onLoadMore() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                geneItems();
-                mAdapter.notifyDataSetChanged();
-                onLoad();
-            }
-        }, 2500);
+        if (page.isLast()) {
+            Toast.makeText(getContext(), "没有数据了", Toast.LENGTH_SHORT).show();
+        } else {
+            int number = page.getNumber();
+            page.setNumber(++number);
+            fetchDataFromInternet(page);
+            myAdapter.notifyDataSetChanged();
+        }
+        onLoad();
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                geneItems();
+//                mAdapter.notifyDataSetChanged();
+//                onLoad();
+//            }
+//        }, 2500);
     }
 
     private void geneItems() {
@@ -104,8 +122,8 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
         }
     }
 
-    private void fetchDataFromInternet() {
-        StringRequest tvShowsDataRequest = new StringRequest(Request.Method.GET, TvShowsUrl.TVSHOWS_URL + "?page=0&size=10&token=90b38c45-7272-4763-9d93-13c2bfaa4f1f", new Response.Listener<String>() {
+    private void fetchDataFromInternet(Page page) {
+        StringRequest tvShowsDataRequest = new StringRequest(Request.Method.GET, TvShowsUrl.TVSHOWS_URL + "?page=" + page.getNumber() + "&size=" + page.getSize() + "&token=90b38c45-7272-4763-9d93-13c2bfaa4f1f", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -119,6 +137,8 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
                             tvShowItem.setOriginName(itemJson.getString("originName"));
                             tvShowItem.setShowTime(itemJson.getString("showTime"));
                             tvShowItem.setDescribe(itemJson.getString("introduction"));
+                            String prePicUrl = itemJson.getString("picture");
+                            tvShowItem.setPicUrl(TvShowsUrl.PIC_URL + prePicUrl.substring(prePicUrl.lastIndexOf("/") + 1));
                             tvShowItems.add(tvShowItem);
                         }
                         Log.i("tvShowItems", tvShowItems.toString());

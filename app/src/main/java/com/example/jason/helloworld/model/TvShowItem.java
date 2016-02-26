@@ -5,15 +5,17 @@ public class TvShowItem {
     private String originName;
     private String showTime;
     private String describe;
+    private String picUrl;
 
     public TvShowItem() {
     }
 
-    public TvShowItem(String name, String originName, String showTime, String describe) {
+    public TvShowItem(String name, String originName, String showTime, String describe, String picUrl) {
         this.name = name;
         this.originName = originName;
         this.showTime = showTime;
         this.describe = describe;
+        this.picUrl = picUrl;
     }
 
     public String getName() {
@@ -46,5 +48,13 @@ public class TvShowItem {
 
     public void setDescribe(String describe) {
         this.describe = describe;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 }

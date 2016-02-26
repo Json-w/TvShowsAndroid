@@ -8,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.example.jason.helloworld.R;
+import com.example.jason.helloworld.common.BitmapCache;
 import com.example.jason.helloworld.model.TvShowItem;
 
 import java.util.List;
@@ -16,9 +19,13 @@ import java.util.List;
 public class LatestTvShowRefreshAdapter extends BaseAdapter {
     private List<TvShowItem> datas;
     private ListView listView;
+    private ImageLoader imageLoader;
+    private BitmapCache bitmapCache;
 
-    public LatestTvShowRefreshAdapter(List<TvShowItem> datas) {
+    public LatestTvShowRefreshAdapter(List<TvShowItem> datas, RequestQueue requestQueue) {
         this.datas = datas;
+        bitmapCache = new BitmapCache();
+        imageLoader = new ImageLoader(requestQueue, bitmapCache);
     }
 
     @Override
@@ -60,10 +67,13 @@ public class LatestTvShowRefreshAdapter extends BaseAdapter {
         viewHolder.txName.setText(tvShowItem.getName() + "(" + tvShowItem.getOriginName() + ")");
         viewHolder.txShowTime.setText(tvShowItem.getShowTime());
         viewHolder.txDescribe.setText(tvShowItem.getDescribe());
+        ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(viewHolder.tvShowPic, R.drawable.ic_launcher, R.drawable.ic_launcher);
+        imageLoader.get(tvShowItem.getPicUrl(), imageListener);
         return convertView;
     }
 
     class ViewHolder {
+
         ImageView tvShowPic;
         TextView txName, txShowTime, txDescribe;
     }
