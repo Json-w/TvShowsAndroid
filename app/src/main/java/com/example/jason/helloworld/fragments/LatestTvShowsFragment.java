@@ -3,6 +3,7 @@ package com.example.jason.helloworld.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,12 +43,18 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
     private LatestTvShowRefreshAdapter myAdapter;
     private ArrayList<String> items = new ArrayList<String>();
     private List<TvShowItem> tvShowItems = new ArrayList<>();
-    private Handler mHandler;
     private int mIndex = 0;
     private int mRefreshIndex = 0;
     private RequestQueue requestQueue;
     private Page page = new Page();
-
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            myAdapter.notifyDataSetChanged();
+            onLoad();
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,8 +67,6 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
 
 
     private void initView(View view) {
-        mHandler = new Handler();
-
         mListView = (XListView) view.findViewById(R.id.list_view);
         mListView.setPullRefreshEnable(true);
         mListView.setPullLoadEnable(true);
@@ -83,7 +88,7 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
         fetchDataFromInternet(page);
         myAdapter = new LatestTvShowRefreshAdapter(tvShowItems, requestQueue);
         mListView.setAdapter(myAdapter);
-        onLoad();
+//        onLoad();
 //        mHandler.postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
@@ -106,9 +111,8 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
             int number = page.getNumber();
             page.setNumber(++number);
             fetchDataFromInternet(page);
-            myAdapter.notifyDataSetChanged();
         }
-        onLoad();
+//        onLoad();
 //        mHandler.postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
@@ -147,11 +151,13 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                mHandler.sendEmptyMessage(1);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
+                mHandler.sendEmptyMessage(0);
             }
         });
         requestQueue.add(tvShowsDataRequest);
