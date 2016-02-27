@@ -1,5 +1,6 @@
 package com.example.jason.helloworld.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.jason.helloworld.R;
+import com.example.jason.helloworld.activities.DetailTvShowActivity;
 import com.example.jason.helloworld.adapters.LatestTvShowRefreshAdapter;
 import com.example.jason.helloworld.common.TvShowsUrl;
 import com.example.jason.helloworld.model.Page;
@@ -33,7 +36,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class LatestTvShowsFragment extends Fragment implements XListView.IXListViewListener {
+public class LatestTvShowsFragment extends Fragment implements XListView.IXListViewListener, AdapterView.OnItemClickListener {
     private XListView mListView;
     private ArrayAdapter<String> mAdapter;
     private LatestTvShowRefreshAdapter myAdapter;
@@ -51,7 +54,6 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
         View view = inflater.inflate(R.layout.act_list_view, container, false);
         requestQueue = Volley.newRequestQueue(getContext());
         fetchDataFromInternet(page);
-        geneItems();
         initView(view);
         return view;
     }
@@ -69,6 +71,7 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
 
         mAdapter = new ArrayAdapter<String>(getContext(), R.layout.vw_list_item, items);
         myAdapter = new LatestTvShowRefreshAdapter(tvShowItems, requestQueue);
+        mListView.setOnItemClickListener(this);
 //        mListView.setAdapter(mAdapter);
         mListView.setAdapter(myAdapter);
     }
@@ -116,12 +119,6 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
 //        }, 2500);
     }
 
-    private void geneItems() {
-        for (int i = 0; i != 20; ++i) {
-            items.add("Test XListView item " + (++mIndex));
-        }
-    }
-
     private void fetchDataFromInternet(Page page) {
         StringRequest tvShowsDataRequest = new StringRequest(Request.Method.GET, TvShowsUrl.TVSHOWS_URL + "?page=" + page.getNumber() + "&size=" + page.getSize() + "&token=90b38c45-7272-4763-9d93-13c2bfaa4f1f", new Response.Listener<String>() {
             @Override
@@ -137,6 +134,8 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
                             tvShowItem.setOriginName(itemJson.getString("originName"));
                             tvShowItem.setShowTime(itemJson.getString("showTime"));
                             tvShowItem.setDescribe(itemJson.getString("introduction"));
+                            tvShowItem.setType(itemJson.getString("type"));
+                            tvShowItem.setShowPlatform(itemJson.getString("showPlatform"));
                             String prePicUrl = itemJson.getString("picture");
                             tvShowItem.setPicUrl(TvShowsUrl.PIC_URL + prePicUrl.substring(prePicUrl.lastIndexOf("/") + 1));
                             tvShowItems.add(tvShowItem);
@@ -166,5 +165,14 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
         mListView.stopRefresh();
         mListView.stopLoadMore();
         mListView.setRefreshTime(getTime());
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
+        TvShowItem tvShowItem = tvShowItems.get(position - 1);
+        Intent intent = new Intent(getActivity(), DetailTvShowActivity.class);
+        intent.putExtra("tvShowItem", tvShowItem);
+        getActivity().startActivity(intent);
     }
 }

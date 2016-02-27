@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <ImageView
+            android:id="@+id/detail_tvshow_img"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/detail_tvshow_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="55dp"
+            android:layout_toRightOf="@id/detail_tvshow_img"
+            android:text="生活大爆炸"
+            android:textColor="@color/bg_black" />
+
+        <TextView
+            android:id="@+id/textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detail_tvshow_name"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/detail_tvshow_img"
+            android:text="播出时间:"
+            android:textColor="@color/bg_black" />
+
+        <TextView
+            android:id="@+id/detail_tvshow_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detail_tvshow_name"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/textview1"
+            android:text="2016-02-19"
+            android:textColor="@color/bg_black" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/detail_tvshow_img"
+            android:text="类型:"
+            android:textColor="@color/bg_black" />
+
+        <TextView
+            android:id="@+id/detail_tvshow_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detail_tvshow_time"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/textView2"
+            android:text="生活/搞笑"
+            android:textColor="@color/bg_black" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView2"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/detail_tvshow_img"
+            android:text="播出平台:"
+            android:textColor="@color/bg_black" />
+
+        <TextView
+            android:id="@+id/detail_tvshow_showPlatform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detail_tvshow_type"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/textView3"
+            android:text="AMC"
+            android:textColor="@color/bg_black" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/detail_tvshow_favoriate">
+
+            <TextView
+                android:id="@+id/detail_tvshow_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/bg_black" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/detail_tvshow_favoriate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="3dp"
+            android:text="收藏" />
+    </RelativeLayout>
+</LinearLayout>

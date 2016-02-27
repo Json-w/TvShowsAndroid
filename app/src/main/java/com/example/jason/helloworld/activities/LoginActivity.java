@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
                /* StringRequest loginRequest = new StringRequest(Request.Method.POST,
                         TvShowsUrl.LOGIN_URL, new Response.Listener<String>() {
                     @Override

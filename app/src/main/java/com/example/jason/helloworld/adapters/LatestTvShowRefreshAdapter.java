@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
+import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.common.BitmapCache;
 import com.example.jason.helloworld.model.TvShowItem;
@@ -24,7 +25,7 @@ public class LatestTvShowRefreshAdapter extends BaseAdapter {
 
     public LatestTvShowRefreshAdapter(List<TvShowItem> datas, RequestQueue requestQueue) {
         this.datas = datas;
-        bitmapCache = new BitmapCache();
+        bitmapCache = MyApplication.getInstance().getBitmapCache();
         imageLoader = new ImageLoader(requestQueue, bitmapCache);
     }
 
@@ -67,8 +68,10 @@ public class LatestTvShowRefreshAdapter extends BaseAdapter {
         viewHolder.txName.setText(tvShowItem.getName() + "(" + tvShowItem.getOriginName() + ")");
         viewHolder.txShowTime.setText(tvShowItem.getShowTime());
         viewHolder.txDescribe.setText(tvShowItem.getDescribe());
-        ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(viewHolder.tvShowPic, R.drawable.ic_launcher, R.drawable.ic_launcher);
-        imageLoader.get(tvShowItem.getPicUrl(), imageListener);
+        if (tvShowItem.getPicUrl() != null && !tvShowItem.getPicUrl().equals("")) {
+            ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(viewHolder.tvShowPic, R.drawable.ic_launcher, R.drawable.ic_launcher);
+            imageLoader.get(tvShowItem.getPicUrl(), imageListener);
+        }
         return convertView;
     }
 

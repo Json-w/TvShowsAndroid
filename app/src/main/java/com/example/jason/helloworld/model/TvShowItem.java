@@ -1,21 +1,28 @@
 package com.example.jason.helloworld.model;
 
-public class TvShowItem {
+import java.io.Serializable;
+
+public class TvShowItem implements Serializable {
     private String name;
     private String originName;
     private String showTime;
     private String describe;
     private String picUrl;
+    private String showPlatform;
+    private String type;
 
     public TvShowItem() {
     }
 
-    public TvShowItem(String name, String originName, String showTime, String describe, String picUrl) {
+    public TvShowItem(String name, String originName, String showTime, String describe, String picUrl, String showPlatform, String type) {
+
         this.name = name;
         this.originName = originName;
         this.showTime = showTime;
         this.describe = describe;
         this.picUrl = picUrl;
+        this.showPlatform = showPlatform;
+        this.type = type;
     }
 
     public String getName() {
@@ -56,5 +63,21 @@ public class TvShowItem {
 
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl;
+    }
+
+    public String getShowPlatform() {
+        return showPlatform;
+    }
+
+    public void setShowPlatform(String showPlatform) {
+        this.showPlatform = showPlatform;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
