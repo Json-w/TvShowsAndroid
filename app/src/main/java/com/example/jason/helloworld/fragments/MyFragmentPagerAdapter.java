@@ -16,7 +16,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     private LatestTvShowsFragment latestTvShowsFragment = null;
     private MyFragment2 myFragment2 = null;
     private MyFragment3 myFragment3 = null;
-    private PersonnalFragment personnalFragment = null;
+    private PersonalFragment personalFragment = null;
 
 
     public MyFragmentPagerAdapter(FragmentManager fm) {
@@ -24,7 +24,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         latestTvShowsFragment = new LatestTvShowsFragment();
         myFragment2 = new MyFragment2();
         myFragment3 = new MyFragment3();
-        personnalFragment = new PersonnalFragment();
+        personalFragment = new PersonalFragment();
     }
 
 
@@ -58,7 +58,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
                 fragment = myFragment3;
                 break;
             case MainActivity.PAGE_FOUR:
-                fragment = personnalFragment;
+                fragment = personalFragment;
                 break;
         }
         return fragment;

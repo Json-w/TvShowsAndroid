@@ -11,17 +11,17 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/portraitImg"
+            android:id="@+id/portrait_img"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginLeft="30dp"
             android:src="@drawable/ic_launcher" />
 
         <TextView
-            android:id="@+id/usernameTx"
+            android:id="@+id/personal_fragment_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/portraitImg"
+            android:layout_toRightOf="@id/portrait_img"
             android:paddingLeft="25dp"
             android:text="Anonymous"
             android:textColor="@color/bg_black"
@@ -30,9 +30,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/usernameTx"
+            android:layout_below="@id/personal_fragment_username"
             android:layout_marginLeft="25dp"
-            android:layout_toRightOf="@id/portraitImg"
+            android:layout_toRightOf="@id/portrait_img"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -43,6 +43,7 @@
                 android:textColor="@color/blue" />
 
             <TextView
+                android:id="@+id/following"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="13"
@@ -56,6 +57,7 @@
                 android:textColor="@color/blue" />
 
             <TextView
+                android:id="@+id/followers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="113"
@@ -65,11 +67,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ListView
+        <GridView
+            android:id="@+id/gridview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="match_parent"
+            android:horizontalSpacing="10dp"
+            android:numColumns="4"
+            android:verticalSpacing="10dp"></GridView>
+
 
     </LinearLayout>
 
