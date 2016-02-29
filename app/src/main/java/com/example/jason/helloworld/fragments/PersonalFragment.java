@@ -1,5 +1,6 @@
 package com.example.jason.helloworld.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.jason.helloworld.R;
+import com.example.jason.helloworld.activities.SendActivity;
 import com.example.jason.helloworld.adapters.PersonalGridViewAdapter;
 import com.example.jason.helloworld.model.TvShowActivity;
 
@@ -49,6 +51,9 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (position == 0) {
+            startActivity(new Intent(getContext(), SendActivity.class));
+        }
         Toast.makeText(getContext(), "你点击了" + position, Toast.LENGTH_SHORT).show();
     }
 }
