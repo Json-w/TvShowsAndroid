@@ -6,4 +6,5 @@ public class TvShowsUrl {
     public final static String BASE_LOAD_IMAGE_URL = BASE_URL + "/pics/";
     public final static String TVSHOWS_URL = BASE_URL + "/tvShow/listLatest";
     public final static String PIC_URL = BASE_URL + "/pics/";
+    public final static String UPLOAD_PIC_URL = BASE_URL + "/upload/picture";
 }
