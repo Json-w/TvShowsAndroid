@@ -24,7 +24,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.jason.helloworld.R;
+import com.example.jason.helloworld.common.DateUtil;
 import com.example.jason.helloworld.common.NetUtil;
 import com.example.jason.helloworld.common.TvShowsUrl;
 
@@ -37,6 +45,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +54,7 @@ public class SendActivity extends AppCompatActivity {
     private static final int SELECT_PIC_BY_TACK_PHOTO = 1;
     private Button sendBtn, backBtn;
     private ImageView sendImg;
-    private EditText sendContent;
+    private EditText ETsendContent;
     private Uri photoUri;
     private String[] items = new String[]{"相册", "拍照"};
     private Bitmap headerPortait;
@@ -57,13 +66,48 @@ public class SendActivity extends AppCompatActivity {
     private static ProgressDialog pd;
     private String imgUrl = TvShowsUrl.UPLOAD_PIC_URL;
     private String resultStr = "";    // 服务端返回结果集
+    private RequestQueue requestQueue;
+    private String serverImgUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send);
+        requestQueue = Volley.newRequestQueue(this);
         mContext = SendActivity.this;
         initView();
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringRequest sendActivityRequest = new StringRequest(Request.Method.POST, TvShowsUrl.SEND_ACTIVITY, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject responseJson = new JSONObject(response);
+                            if (responseJson.getInt("statusCode") == 1) {
+                                handler.sendEmptyMessage(1);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        handler.sendEmptyMessage(2);
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+
+                        return getInput();
+                    }
+                };
+                requestQueue.add(sendActivityRequest);
+                pd = ProgressDialog.show(mContext, null, "正在发布动态，请稍候...");
+                pd.show();
+            }
+        });
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,11 +122,20 @@ public class SendActivity extends AppCompatActivity {
         });
     }
 
+    private Map<String, String> getInput() {
+        Map<String, String> map = new HashMap<>();
+        map.put("content", ETsendContent.getText().toString());
+        map.put("releaseTime", DateUtil.dateToStr(new Date()));
+        map.put("userId", "3");
+        map.put("picUrl", serverImgUrl);
+        return map;
+    }
+
     private void initView() {
         sendBtn = (Button) this.findViewById(R.id.send_button);
         backBtn = (Button) this.findViewById(R.id.send_back_button);
         sendImg = (ImageView) this.findViewById(R.id.send_img);
-        sendContent = (EditText) this.findViewById(R.id.send_content);
+        ETsendContent = (EditText) this.findViewById(R.id.send_content);
     }
 
     void showDialog() {
@@ -228,11 +281,11 @@ public class SendActivity extends AppCompatActivity {
                 fileparams = new HashMap<String, File>();
                 // 要上传的图片文件
                 File file = new File(picPath);
-                fileparams.put("image", file);
+                fileparams.put("file", file);
                 // 利用HttpURLConnection对象从网络中获取网页数据
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 // 设置连接超时（记得设置连接超时,如果网络不好,Android系统在超过默认时间会收回资源中断操作）
-                conn.setConnectTimeout(5000);
+                conn.setConnectTimeout(10000);
                 // 设置允许输出（发送POST请求必须设置允许输出）
                 conn.setDoOutput(true);
                 // 设置使用POST的方式发送
@@ -278,21 +331,29 @@ public class SendActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(resultStr);
                         // 服务端以字符串“1”作为操作成功标记
-                        if (jsonObject.optString("status").equals("1")) {
+                        if (jsonObject.optString("statusCode").equals("1")) {
 
                             // 用于拼接发布说说时用到的图片路径
                             // 服务端返回的JsonObject对象中提取到图片的网络URL路径
-                            String imageUrl = jsonObject.optString("imageUrl");
+                            String imageUrl = jsonObject.getJSONObject("data").getString("pictureUrl");
+                            serverImgUrl = imageUrl;
                             // 获取缓存中的图片路径
                             Toast.makeText(mContext, imageUrl, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(mContext, jsonObject.optString("statusMessage"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, jsonObject.optString("statusDesc"), Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     break;
+                case 1:
+                    pd.dismiss();
+                    Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
+                    break;
+                case 2:
+                    Toast.makeText(mContext, "发布失败", Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
                 default:
                     break;
             }
