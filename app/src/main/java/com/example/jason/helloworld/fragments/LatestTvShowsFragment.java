@@ -143,6 +143,7 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
                             String prePicUrl = itemJson.getString("picture");
                             tvShowItem.setPicUrl(TvShowsUrl.PIC_URL + prePicUrl.substring(prePicUrl.lastIndexOf("/") + 1));
                             tvShowItems.add(tvShowItem);
+                            //TODO add the bind the data from server to page.
                         }
                         Log.i("tvShowItems", tvShowItems.toString());
                     } else {

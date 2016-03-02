@@ -57,7 +57,7 @@ public class PersonalGridViewAdapter extends BaseAdapter {
             viewHolder.IVActivity.setImageResource(R.mipmap.add_pic);
         } else {
             ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(viewHolder.IVActivity, R.drawable.ic_launcher, R.drawable.ic_launcher);
-            TvShowActivity tvShowActivity = datas.get(position);
+            TvShowActivity tvShowActivity = datas.get(position-1);
             imageLoader.get(tvShowActivity.getPictureUrl(), imageListener);
         }
         return convertView;

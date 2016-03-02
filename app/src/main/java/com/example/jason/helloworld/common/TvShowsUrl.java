@@ -9,4 +9,7 @@ public class TvShowsUrl {
     public final static String PIC_URL = BASE_URL + "/pics/";
     public final static String UPLOAD_PIC_URL = BASE_URL + "/upload/picture";
     public final static String SEND_ACTIVITY = BASE_URL + "/activity/send";
+    public final static String ACTIVITY_IMAGE_URL = BASE_URL;
+    public final static String ACTIVITIES_GET = BASE_URL+"/activity/3";
+    //TODO dynamic generate the user id
 }
