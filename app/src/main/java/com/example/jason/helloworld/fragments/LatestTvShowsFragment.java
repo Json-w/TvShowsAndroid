@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,12 +38,9 @@ import java.util.Locale;
 
 public class LatestTvShowsFragment extends Fragment implements XListView.IXListViewListener, AdapterView.OnItemClickListener {
     private XListView mListView;
-    private ArrayAdapter<String> mAdapter;
     private LatestTvShowRefreshAdapter myAdapter;
     private ArrayList<String> items = new ArrayList<String>();
     private List<TvShowItem> tvShowItems = new ArrayList<>();
-    private int mIndex = 0;
-    private int mRefreshIndex = 0;
     private RequestQueue requestQueue;
     private Page page = new Page();
     private Handler mHandler = new Handler() {
@@ -74,7 +70,6 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
         mListView.setXListViewListener(this);
         mListView.setRefreshTime(getTime());
 
-        mAdapter = new ArrayAdapter<String>(getContext(), R.layout.vw_list_item, items);
         myAdapter = new LatestTvShowRefreshAdapter(tvShowItems, requestQueue);
         mListView.setOnItemClickListener(this);
 //        mListView.setAdapter(mAdapter);

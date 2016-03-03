@@ -14,7 +14,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private final int PAGER_COUNT = 4;
     private LatestTvShowsFragment latestTvShowsFragment = null;
-    private MyFragment2 myFragment2 = null;
+    private SquareFragment squareFragment = null;
     private MyFragment3 myFragment3 = null;
     private PersonalFragment personalFragment = null;
 
@@ -22,7 +22,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
         latestTvShowsFragment = new LatestTvShowsFragment();
-        myFragment2 = new MyFragment2();
+        squareFragment = new SquareFragment();
         myFragment3 = new MyFragment3();
         personalFragment = new PersonalFragment();
     }
@@ -52,7 +52,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
                 fragment = latestTvShowsFragment;
                 break;
             case MainActivity.PAGE_TWO:
-                fragment = myFragment2;
+                fragment = squareFragment;
                 break;
             case MainActivity.PAGE_THREE:
                 fragment = myFragment3;

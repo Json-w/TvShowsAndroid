@@ -62,15 +62,19 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_channel:
+                txt_topbar.setText("新剧");
                 vpager.setCurrentItem(PAGE_ONE);
                 break;
             case R.id.rb_message:
+                txt_topbar.setText("广场");
                 vpager.setCurrentItem(PAGE_TWO);
                 break;
             case R.id.rb_better:
+                txt_topbar.setText("收藏");
                 vpager.setCurrentItem(PAGE_THREE);
                 break;
             case R.id.rb_setting:
+                txt_topbar.setText("个人");
                 vpager.setCurrentItem(PAGE_FOUR);
                 break;
         }

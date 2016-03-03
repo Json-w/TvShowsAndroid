@@ -5,10 +5,10 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="tab_menu_alert">提醒</string>
-    <string name="tab_menu_profile">信息</string>
-    <string name="tab_menu_pay">我的</string>
-    <string name="tab_menu_setting">设置</string>
+    <string name="tab_menu_alert">新剧</string>
+    <string name="tab_menu_profile">广场</string>
+    <string name="tab_menu_pay">收藏</string>
+    <string name="tab_menu_setting">个人</string>
     <string name="hintUsername">请输入用户名</string>
     <string name="hintPassword">请输入密码</string>
     <string name="loginBtn">登录</string>
