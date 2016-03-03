@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.jason.helloworld.R;
+import com.example.jason.helloworld.activities.DetailActivity;
 import com.example.jason.helloworld.activities.SendActivity;
 import com.example.jason.helloworld.adapters.PersonalGridViewAdapter;
 import com.example.jason.helloworld.common.DateUtil;
@@ -120,7 +121,10 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position == 0) {
             startActivity(new Intent(getContext(), SendActivity.class));
+        } else {
+            Intent intent = new Intent(getContext(), DetailActivity.class);
+            intent.putExtra("detailActivity", datas.get(position - 1));
+            startActivity(intent);
         }
-        Toast.makeText(getContext(), "你点击了" + position, Toast.LENGTH_SHORT).show();
     }
 }

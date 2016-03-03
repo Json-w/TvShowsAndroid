@@ -28,4 +28,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="title_activity_send">SendActivity</string>
+
+    <string name="title_activity_detail">DetailActivity</string>
 </resources>
