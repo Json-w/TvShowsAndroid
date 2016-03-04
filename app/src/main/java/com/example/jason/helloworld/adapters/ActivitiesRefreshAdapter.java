@@ -53,12 +53,8 @@ public class ActivitiesRefreshAdapter extends BaseAdapter {
 
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.latest_tvshows_item, null);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activities_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.tvShowPic = (ImageView) convertView.findViewById(R.id.item_tvShowPic);
-            viewHolder.txName = (TextView) convertView.findViewById(R.id.item_tvShowName);
-            viewHolder.txShowTime = (TextView) convertView.findViewById(R.id.item_tvShowTime);
-            viewHolder.txDescribe = (TextView) convertView.findViewById(R.id.item_describe);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
