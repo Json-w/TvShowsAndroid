@@ -21,11 +21,10 @@ public class ActivitiesRefreshAdapter extends BaseAdapter {
     private List<TvShowActivity> datas;
     private ListView listView;
     private ImageLoader imageLoader;
-    private BitmapCache bitmapCache;
 
     public ActivitiesRefreshAdapter(List<TvShowActivity> datas, RequestQueue requestQueue) {
         this.datas = datas;
-        bitmapCache = MyApplication.getInstance().getBitmapCache();
+        BitmapCache bitmapCache = MyApplication.getInstance().getBitmapCache();
         imageLoader = new ImageLoader(requestQueue, bitmapCache);
     }
 
@@ -55,25 +54,28 @@ public class ActivitiesRefreshAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activities_item, null);
             viewHolder = new ViewHolder();
+            viewHolder.IVActivityItemPortrait = (ImageView) convertView.findViewById(R.id.activity_item_portrait_img);
+            viewHolder.IVActivityItemImg = (ImageView) convertView.findViewById(R.id.activity_item_img);
+            viewHolder.txUsername = (TextView) convertView.findViewById(R.id.activity_item_username);
+            viewHolder.txActivityContent = (TextView) convertView.findViewById(R.id.activity_item_content);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        TvShowActivity tvShowActivity = datas.get(position);
+        viewHolder.txUsername.setText(tvShowActivity.getUsername());
+        viewHolder.txActivityContent.setText(tvShowActivity.getContent());
 
-//        TvShowItem tvShowItem = datas.get(position);
-//        viewHolder.txName.setText(tvShowItem.getName() + "(" + tvShowItem.getOriginName() + ")");
-//        viewHolder.txShowTime.setText(tvShowItem.getShowTime());
-//        viewHolder.txDescribe.setText(tvShowItem.getDescribe());
-//        if (tvShowItem.getPicUrl() != null && !tvShowItem.getPicUrl().equals("")) {
-//            ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(viewHolder.tvShowPic, R.drawable.ic_launcher, R.drawable.ic_launcher);
-//            imageLoader.get(tvShowItem.getPicUrl(), imageListener);
-//        }
+        ImageLoader.ImageListener contentImageListener = ImageLoader.getImageListener(viewHolder.IVActivityItemImg, R.drawable.ic_launcher, R.drawable.ic_launcher);
+        ImageLoader.ImageListener portraitImageListener = ImageLoader.getImageListener(viewHolder.IVActivityItemPortrait, R.drawable.ic_launcher, R.drawable.ic_launcher);
+        imageLoader.get(tvShowActivity.getPictureUrl(), contentImageListener);
+        imageLoader.get(tvShowActivity.getUserPortraitUrl(), portraitImageListener);
         return convertView;
     }
 
     class ViewHolder {
 
-        ImageView tvShowPic;
-        TextView txName, txShowTime, txDescribe;
+        ImageView IVActivityItemPortrait, IVActivityItemImg;
+        TextView txUsername, txActivityContent;
     }
 }

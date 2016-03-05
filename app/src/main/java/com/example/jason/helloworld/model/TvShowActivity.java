@@ -8,16 +8,20 @@ public class TvShowActivity implements Serializable {
     private String pictureUrl;
     private String releaseTime;
     private String content;
+    private String username;
+    private String userPortraitUrl;
 
     public TvShowActivity() {
     }
 
-    public TvShowActivity(int id, int userId, String pictureUrl, String releaseTime, String content) {
+    public TvShowActivity(int id, int userId, String pictureUrl, String releaseTime, String content, String username, String userPortraitUrl) {
         this.id = id;
         this.userId = userId;
         this.pictureUrl = pictureUrl;
         this.releaseTime = releaseTime;
         this.content = content;
+        this.username = username;
+        this.userPortraitUrl = userPortraitUrl;
     }
 
     public int getId() {
@@ -58,5 +62,21 @@ public class TvShowActivity implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUserPortraitUrl() {
+        return userPortraitUrl;
+    }
+
+    public void setUserPortraitUrl(String userPortraitUrl) {
+        this.userPortraitUrl = userPortraitUrl;
     }
 }
