@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_username;
     private EditText et_password;
     private Button btn_login;
-
+    private Button registerBtn;
     private MyApplication myApplication;
     RequestQueue requestQueue;
 
@@ -30,6 +30,12 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
         setContentView(R.layout.activity_login);
         initViews();
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,8 +80,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        et_username = (EditText) this.findViewById(R.id.loginUsername);
-        et_password = (EditText) this.findViewById(R.id.loginPassword);
+        et_username = (EditText) this.findViewById(R.id.registerUsername);
+        et_password = (EditText) this.findViewById(R.id.registerPassword);
         btn_login = (Button) this.findViewById(R.id.loginBtn);
+        registerBtn = (Button) this.findViewById(R.id.registerBtn);
     }
 }
