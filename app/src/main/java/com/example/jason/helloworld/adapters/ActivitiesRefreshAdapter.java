@@ -68,8 +68,12 @@ public class ActivitiesRefreshAdapter extends BaseAdapter {
 
         ImageLoader.ImageListener contentImageListener = ImageLoader.getImageListener(viewHolder.IVActivityItemImg, R.drawable.ic_launcher, R.drawable.ic_launcher);
         ImageLoader.ImageListener portraitImageListener = ImageLoader.getImageListener(viewHolder.IVActivityItemPortrait, R.drawable.ic_launcher, R.drawable.ic_launcher);
-        imageLoader.get(tvShowActivity.getPictureUrl(), contentImageListener);
-        imageLoader.get(tvShowActivity.getUserPortraitUrl(), portraitImageListener);
+        if (null != tvShowActivity.getPictureUrl() && !"".equals(tvShowActivity.getPictureUrl())) {
+            imageLoader.get(tvShowActivity.getPictureUrl(), contentImageListener);
+        }
+        if (null != tvShowActivity.getUserPortraitUrl() && !"".equals(tvShowActivity.getUserPortraitUrl())) {
+            imageLoader.get(tvShowActivity.getUserPortraitUrl(), portraitImageListener);
+        }
         return convertView;
     }
 

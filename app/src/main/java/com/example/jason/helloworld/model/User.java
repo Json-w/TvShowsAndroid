@@ -4,18 +4,16 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private int followerId;
-    private int chooseTvShowId;
+    private String portraitUrl;
 
     public User() {
     }
 
-    public User(int id, String username, String password, int followerId, int chooseTvShowId) {
+    public User(int id, String username, String password, String portraitUrl) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.followerId = followerId;
-        this.chooseTvShowId = chooseTvShowId;
+        this.portraitUrl = portraitUrl;
     }
 
     public int getId() {
@@ -42,19 +40,11 @@ public class User {
         this.password = password;
     }
 
-    public int getFollowerId() {
-        return followerId;
+    public String getPortraitUrl() {
+        return portraitUrl;
     }
 
-    public void setFollowerId(int followerId) {
-        this.followerId = followerId;
-    }
-
-    public int getChooseTvShowId() {
-        return chooseTvShowId;
-    }
-
-    public void setChooseTvShowId(int chooseTvShowId) {
-        this.chooseTvShowId = chooseTvShowId;
+    public void setPortraitUrl(String portraitUrl) {
+        this.portraitUrl = portraitUrl;
     }
 }

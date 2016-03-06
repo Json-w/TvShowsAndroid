@@ -42,6 +42,7 @@ public class SquareFragment extends Fragment implements XListView.IXListViewList
         View view = inflater.inflate(R.layout.square_fragment, container, false);
         xListView = (XListView) view.findViewById(R.id.square_fragment_activity_list);
         requestQueue = Volley.newRequestQueue(getContext());
+        fetchDataFromInternet(new Page());
         activitiesRefreshAdapter = new ActivitiesRefreshAdapter(datas, requestQueue);
         xListView.setAdapter(activitiesRefreshAdapter);
         xListView.setXListViewListener(this);
@@ -81,7 +82,10 @@ public class SquareFragment extends Fragment implements XListView.IXListViewList
                             tvShowActivity.setContent(activityJson.getString("content"));
                             tvShowActivity.setPictureUrl(TvShowsUrl.BASE_URL + activityJson.getString("picUrl"));
                             tvShowActivity.setReleaseTime(DateUtil.TimeMillisToStr(activityJson.getLong("releaseTime")));
-
+                            User user = fetchUserInfoFromInternet(tvShowActivity.getUserId());
+                            tvShowActivity.setUserPortraitUrl(user.getPortraitUrl());
+                            tvShowActivity.setUsername(user.getPortraitUrl());
+                            datas.add(tvShowActivity);
                         }
                     }
                 } catch (JSONException e) {
@@ -94,6 +98,7 @@ public class SquareFragment extends Fragment implements XListView.IXListViewList
 
             }
         });
+        requestQueue.add(fetchDataRequest);
     }
 
     private User fetchUserInfoFromInternet(int userId) {
@@ -108,7 +113,7 @@ public class SquareFragment extends Fragment implements XListView.IXListViewList
                         JSONObject data = responseJson.getJSONObject("data");
                         user.setId(data.getInt("id"));
                         user.setUsername(data.getString("username"));
-                        user.setFollowerId(data.getInt("followerId"));
+                        user.setPortraitUrl(data.getString("portraitUrl"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -120,6 +125,7 @@ public class SquareFragment extends Fragment implements XListView.IXListViewList
 
             }
         });
+        requestQueue.add(fetUserInfoRequest);
         return user;
     }
 
