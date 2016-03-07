@@ -24,6 +24,7 @@ import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.activities.DetailActivity;
 import com.example.jason.helloworld.activities.SendActivity;
+import com.example.jason.helloworld.activities.UserInfoActivity;
 import com.example.jason.helloworld.adapters.PersonalGridViewAdapter;
 import com.example.jason.helloworld.common.DateUtil;
 import com.example.jason.helloworld.common.StringUtil;
@@ -73,6 +74,12 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
         mAdapter = new PersonalGridViewAdapter(datas, requestQueue);
         gridView.setAdapter(mAdapter);
         gridView.setOnItemClickListener(this);
+        IVPortrait.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), UserInfoActivity.class));
+            }
+        });
         return view;
     }
 
@@ -85,8 +92,8 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
                     if (responseJson.getInt("statusCode") == 1) {
                         JSONObject userJson = responseJson.getJSONObject("data");
                         TVUsername.setText(userJson.getString("username"));
-                        TVFollowers.setText(userJson.getInt("followersNum")+"");
-                        TVFollowing.setText(userJson.getInt("followingNum")+"");
+                        TVFollowers.setText(userJson.getInt("followersNum") + "");
+                        TVFollowing.setText(userJson.getInt("followingNum") + "");
                         ImageLoader.ImageListener portraitListener = ImageLoader.getImageListener(IVPortrait, R.drawable.ic_launcher, R.drawable.ic_launcher);
                         String portraitUrl = userJson.getString("portraitUrl");
                         if (!StringUtil.isNull(portraitUrl)) {
@@ -114,10 +121,11 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
                     JSONObject responseJson = new JSONObject(response);
                     if (responseJson.getInt("statusCode") == 1) {
                         JSONObject dataJsonObj = responseJson.getJSONObject("data");
-                        page.setTotalPages(dataJsonObj.getInt("totalPages"));
-                        page.setNumber(dataJsonObj.getInt("number"));
-                        page.setLast(dataJsonObj.getBoolean("last"));
-                        JSONArray contentJsonArr = dataJsonObj.getJSONArray("content");
+                        JSONObject activityJsonObj = dataJsonObj.getJSONObject("activities");
+                        page.setTotalPages(activityJsonObj.getInt("totalPages"));
+                        page.setNumber(activityJsonObj.getInt("number"));
+                        page.setLast(activityJsonObj.getBoolean("last"));
+                        JSONArray contentJsonArr = activityJsonObj.getJSONArray("content");
                         for (int i = 0; i < contentJsonArr.length(); i++) {
                             JSONObject itemJson = contentJsonArr.getJSONObject(i);
                             TvShowActivity tvShowActivityItem = new TvShowActivity();

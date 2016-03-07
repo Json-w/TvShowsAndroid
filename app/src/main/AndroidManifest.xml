@@ -41,6 +41,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.UserInfoActivity"
+            android:label="@string/title_activity_user_info"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

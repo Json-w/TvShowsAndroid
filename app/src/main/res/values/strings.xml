@@ -32,4 +32,6 @@
     <string name="title_activity_detail">DetailActivity</string>
 
     <string name="title_activity_register">RegisterActivity</string>
+
+    <string name="title_activity_user_info">UserInfo</string>
 </resources>
