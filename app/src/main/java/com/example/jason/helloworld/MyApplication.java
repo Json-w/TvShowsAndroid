@@ -8,7 +8,6 @@ public class MyApplication extends Application {
     private String token;
     private static MyApplication instance;
     private BitmapCache bitmapCache;
-
     @Override
     public void onCreate() {
         super.onCreate();

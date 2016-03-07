@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         vpager = (ViewPager) findViewById(R.id.vpager);
         vpager.setAdapter(mAdapter);
         vpager.setCurrentItem(0);
+        vpager.setOffscreenPageLimit(3);
         vpager.addOnPageChangeListener(this);
     }
 

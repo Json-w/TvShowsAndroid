@@ -17,13 +17,16 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.activities.DetailActivity;
 import com.example.jason.helloworld.activities.SendActivity;
 import com.example.jason.helloworld.adapters.PersonalGridViewAdapter;
 import com.example.jason.helloworld.common.DateUtil;
+import com.example.jason.helloworld.common.StringUtil;
 import com.example.jason.helloworld.common.TvShowsUrl;
 import com.example.jason.helloworld.model.Page;
 import com.example.jason.helloworld.model.TvShowActivity;
@@ -43,6 +46,7 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
     private PersonalGridViewAdapter mAdapter;
     private List<TvShowActivity> datas;
     private Page page = new Page();
+    private ImageLoader imageLoader;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -63,11 +67,43 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
         initView(view);
         datas = new ArrayList<>();
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        imageLoader = new ImageLoader(requestQueue, MyApplication.getInstance().getBitmapCache());
+        fetchUserInfoAndSetToUI(requestQueue);
         fetchDataFromInternet(requestQueue);
         mAdapter = new PersonalGridViewAdapter(datas, requestQueue);
         gridView.setAdapter(mAdapter);
         gridView.setOnItemClickListener(this);
         return view;
+    }
+
+    private void fetchUserInfoAndSetToUI(RequestQueue requestQueue) {
+        StringRequest userInfoRequest = new StringRequest(TvShowsUrl.USER_INFO_URL + "3", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject responseJson = new JSONObject(response);
+                    if (responseJson.getInt("statusCode") == 1) {
+                        JSONObject userJson = responseJson.getJSONObject("data");
+                        TVUsername.setText(userJson.getString("username"));
+                        TVFollowers.setText(userJson.getInt("followersNum")+"");
+                        TVFollowing.setText(userJson.getInt("followingNum")+"");
+                        ImageLoader.ImageListener portraitListener = ImageLoader.getImageListener(IVPortrait, R.drawable.ic_launcher, R.drawable.ic_launcher);
+                        String portraitUrl = userJson.getString("portraitUrl");
+                        if (!StringUtil.isNull(portraitUrl)) {
+                            imageLoader.get(portraitUrl, portraitListener);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "网络有误", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(userInfoRequest);
     }
 
     private void fetchDataFromInternet(RequestQueue requestQueue) {
