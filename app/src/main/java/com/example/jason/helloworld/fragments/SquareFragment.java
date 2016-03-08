@@ -110,7 +110,7 @@ public class SquareFragment extends Fragment implements XListView.IXListViewList
                             tvShowActivity.setReleaseTime(DateUtil.TimeMillisToStr(activityJson.getLong("releaseTime")));
                             JSONObject user = activityJson.getJSONObject("user");
                             tvShowActivity.setUsername(user.getString("username"));
-                            tvShowActivity.setUserPortraitUrl(user.getString("portraitUrl"));
+                            tvShowActivity.setUserPortraitUrl(TvShowsUrl.BASE_URL + user.getString("portraitUrl"));
                             datas.add(tvShowActivity);
                         }
                     }

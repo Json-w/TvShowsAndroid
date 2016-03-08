@@ -97,14 +97,14 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
                         TVFollowers.setText(userJson.getInt("followersNum") + "");
                         TVFollowing.setText(userJson.getInt("followingNum") + "");
                         ImageLoader.ImageListener portraitListener = ImageLoader.getImageListener(IVPortrait, R.drawable.ic_launcher, R.drawable.ic_launcher);
-                        String portraitUrl = userJson.getString("portraitUrl");
+                        String portraitUrl = TvShowsUrl.BASE_URL + userJson.getString("portraitUrl");
                         if (!StringUtil.isNull(portraitUrl)) {
                             imageLoader.get(portraitUrl, portraitListener);
                         }
                         user = new User();
                         user.setId(userJson.getInt("id"));
                         user.setUsername(userJson.getString("username"));
-                        user.setPortraitUrl(userJson.getString("portraitUrl"));
+                        user.setPortraitUrl(TvShowsUrl.BASE_URL + userJson.getString("portraitUrl"));
                         user.setEmail(userJson.getString("email"));
                     }
                 } catch (JSONException e) {

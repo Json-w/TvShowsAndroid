@@ -6,6 +6,7 @@ public class TvShowsUrl {
     public final static String LOGIN_URL = BASE_URL + "/user/login";
     public final static String BASE_LOAD_IMAGE_URL = BASE_URL + "/pics/";
     public final static String USER_INFO_URL = BASE_URL + "/user/";
+    public final static String USER_INFO_UPDATE = BASE_URL + "/user/update";
     public final static String USER_IF_REPEAT = BASE_URL + "/user/checkUsernameIfRepeat/";
     public final static String USER_REGISTER = BASE_URL + "/user/register";
     public final static String TVSHOWS_URL = BASE_URL + "/tvShow/listLatest";
