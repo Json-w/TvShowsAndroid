@@ -31,6 +31,7 @@ import com.example.jason.helloworld.common.StringUtil;
 import com.example.jason.helloworld.common.TvShowsUrl;
 import com.example.jason.helloworld.model.Page;
 import com.example.jason.helloworld.model.TvShowActivity;
+import com.example.jason.helloworld.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +49,7 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
     private List<TvShowActivity> datas;
     private Page page = new Page();
     private ImageLoader imageLoader;
+    private User user;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -77,7 +79,7 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
         IVPortrait.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), UserInfoActivity.class));
+                startActivity(new Intent(getContext(), UserInfoActivity.class).putExtra("user", user));
             }
         });
         return view;
@@ -99,6 +101,11 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
                         if (!StringUtil.isNull(portraitUrl)) {
                             imageLoader.get(portraitUrl, portraitListener);
                         }
+                        user = new User();
+                        user.setId(userJson.getInt("id"));
+                        user.setUsername(userJson.getString("username"));
+                        user.setPortraitUrl(userJson.getString("portraitUrl"));
+                        user.setEmail(userJson.getString("email"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

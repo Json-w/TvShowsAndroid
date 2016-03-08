@@ -1,19 +1,23 @@
 package com.example.jason.helloworld.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private int id;
     private String username;
     private String password;
     private String portraitUrl;
+    private String email;
 
     public User() {
     }
 
-    public User(int id, String username, String password, String portraitUrl) {
+    public User(int id, String username, String password, String portraitUrl, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.portraitUrl = portraitUrl;
+        this.email = email;
     }
 
     public int getId() {
@@ -46,5 +50,13 @@ public class User {
 
     public void setPortraitUrl(String portraitUrl) {
         this.portraitUrl = portraitUrl;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

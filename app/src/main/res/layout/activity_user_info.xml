@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_gray"
+    android:background="@color/bg_white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -39,6 +39,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/user_info_portrait_line"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal">
@@ -52,6 +53,7 @@
                 android:textSize="20sp" />
 
             <ImageView
+                android:id="@+id/user_info_portrait"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
@@ -60,6 +62,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/user_info_username_line"
             android:layout_width="match_parent"
             android:layout_height="40dp">
 
@@ -72,6 +75,7 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/user_info_username"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="200dp"
@@ -79,6 +83,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/user_info_email_line"
             android:layout_width="match_parent"
             android:layout_height="40dp">
 
@@ -91,13 +96,15 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/user_info_email"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="200dp"
+                android:layout_marginLeft="120dp"
                 android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/user_info_change_pwd"
             android:layout_width="match_parent"
             android:layout_height="40dp">
 
@@ -112,6 +119,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/user_info_logout"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
