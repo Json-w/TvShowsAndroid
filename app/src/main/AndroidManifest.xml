@@ -45,7 +45,12 @@
         <activity
             android:name=".activities.UserInfoActivity"
             android:label="@string/title_activity_user_info"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ModifyUserBaseInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_modify_user_base_info"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

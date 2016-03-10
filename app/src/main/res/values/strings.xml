@@ -34,4 +34,6 @@
     <string name="title_activity_register">RegisterActivity</string>
 
     <string name="title_activity_user_info">UserInfo</string>
+
+    <string name="title_activity_modify_user_base_info">ModifyUserBaseInfoActivity</string>
 </resources>
