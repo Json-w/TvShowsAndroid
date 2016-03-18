@@ -1,6 +1,7 @@
 package com.example.jason.helloworld.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -39,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences userInfo = getSharedPreferences("userInfo", 0);
+                SharedPreferences.Editor editor = userInfo.edit();
+                editor.putString("username", "wangpei");
+                editor.putString("password", "123456");
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
                /* StringRequest loginRequest = new StringRequest(Request.Method.POST,

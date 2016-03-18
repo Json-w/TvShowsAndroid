@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_white"
     android:orientation="vertical"
-    tools:context="com.example.jason.helloworld.activities.ModifyUserBaseInfoActivity">
+    tools:context=".activities.ModifyEmailActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="修改"
+            android:text="邮箱"
             android:textSize="25sp" />
 
         <Button
@@ -40,11 +40,12 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/modify_back_button"
             android:layout_gravity="center"
-            android:text="发布" />
+            android:text="完成" />
 
     </RelativeLayout>
 
     <EditText
+        android:layout_gravity="center"
         android:id="@+id/modify_content"
         android:layout_width="200dp"
         android:layout_height="wrap_content" />

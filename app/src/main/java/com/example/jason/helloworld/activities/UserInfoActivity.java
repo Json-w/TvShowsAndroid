@@ -1,6 +1,7 @@
 package com.example.jason.helloworld.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -111,6 +112,8 @@ public class UserInfoActivity extends UploadActivity implements View.OnClickList
         LLPortrait.setOnClickListener(this);
         backBtn.setOnClickListener(this);
         logoutBtn.setOnClickListener(this);
+        LLEmail.setOnClickListener(this);
+        LLChangePwd.setOnClickListener(this);
     }
 
     @Override
@@ -146,9 +149,8 @@ public class UserInfoActivity extends UploadActivity implements View.OnClickList
             case R.id.user_info_portrait_line:
                 showDialog();
                 break;
-            case R.id.user_info_username_line:
-                break;
             case R.id.user_info_email_line:
+                startActivity(new Intent(UserInfoActivity.this, ModifyEmailActivity.class).putExtra("user", user));
                 break;
             case R.id.user_info_change_pwd:
                 break;
