@@ -153,6 +153,7 @@ public class UserInfoActivity extends UploadActivity implements View.OnClickList
                 startActivity(new Intent(UserInfoActivity.this, ModifyEmailActivity.class).putExtra("user", user));
                 break;
             case R.id.user_info_change_pwd:
+                startActivity(new Intent(UserInfoActivity.this, ModifyPwdActivity.class).putExtra("user", user));
                 break;
             case R.id.user_info_back_button:
                 finish();

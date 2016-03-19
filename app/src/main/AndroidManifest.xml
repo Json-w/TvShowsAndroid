@@ -53,9 +53,8 @@
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activities.ModifyPwdActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_modify_email"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme"/>
     </application>
 
 </manifest>

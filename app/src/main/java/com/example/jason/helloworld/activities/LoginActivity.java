@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
+import com.example.jason.helloworld.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("username", "wangpei");
                 editor.putString("password", "123456");
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                MyApplication.user = new User(3, "wangpei", "123456", "", "519875872@qq.com");
+                // TODO: save the user to MyApplication to make sure other activities can invoke.
                 finish();
                /* StringRequest loginRequest = new StringRequest(Request.Method.POST,
                         TvShowsUrl.LOGIN_URL, new Response.Listener<String>() {

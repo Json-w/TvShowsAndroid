@@ -41,9 +41,9 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
     private LatestTvShowRefreshAdapter myAdapter;
     private ArrayList<String> items = new ArrayList<String>();
     private List<TvShowItem> tvShowItems = new ArrayList<>();
-    private RequestQueue requestQueue;
+    protected RequestQueue requestQueue;
     private Page page = new Page();
-    private Handler mHandler = new Handler() {
+    protected Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             myAdapter.notifyDataSetChanged();
@@ -72,7 +72,6 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
 
         myAdapter = new LatestTvShowRefreshAdapter(tvShowItems, requestQueue);
         mListView.setOnItemClickListener(this);
-//        mListView.setAdapter(mAdapter);
         mListView.setAdapter(myAdapter);
     }
 
@@ -83,19 +82,6 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
         fetchDataFromInternet(page);
         myAdapter = new LatestTvShowRefreshAdapter(tvShowItems, requestQueue);
         mListView.setAdapter(myAdapter);
-//        onLoad();
-//        mHandler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mIndex = ++mRefreshIndex;
-//                items.clear();
-//                geneItems();
-//                mAdapter = new ArrayAdapter<String>(getContext(), R.layout.vw_list_item,
-//                        items);
-//                mListView.setAdapter(mAdapter);
-//                onLoad();
-//            }
-//        }, 2500);
     }
 
     @Override
@@ -107,18 +93,9 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
             page.setNumber(++number);
             fetchDataFromInternet(page);
         }
-//        onLoad();
-//        mHandler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                geneItems();
-//                mAdapter.notifyDataSetChanged();
-//                onLoad();
-//            }
-//        }, 2500);
     }
 
-    private void fetchDataFromInternet(Page page) {
+    protected void fetchDataFromInternet(Page page) {
         StringRequest tvShowsDataRequest = new StringRequest(Request.Method.GET, TvShowsUrl.TVSHOWS_URL + "?page=" + page.getNumber() + "&size=" + page.getSize() + "&token=90b38c45-7272-4763-9d93-13c2bfaa4f1f", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

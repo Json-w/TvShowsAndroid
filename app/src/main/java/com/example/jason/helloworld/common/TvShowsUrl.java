@@ -7,11 +7,18 @@ public class TvShowsUrl {
     public final static String BASE_LOAD_IMAGE_URL = BASE_URL + "/pics/";
     public final static String USER_INFO_URL = BASE_URL + "/user/";
     public final static String USER_INFO_UPDATE = BASE_URL + "/user/update";
+    public final static String USER_MODIFY_PWD = BASE_URL + "/user/updatePwd";
     public final static String USER_IF_REPEAT = BASE_URL + "/user/checkUsernameIfRepeat/";
     public final static String USER_REGISTER = BASE_URL + "/user/register";
+
     public final static String TVSHOWS_URL = BASE_URL + "/tvShow/listLatest";
+    public final static String COLLECT_TVSHOW_URL = BASE_URL + "/tvShow";
+    public final static String CHECK_IF_TVSHOW_COLLECTED_URL = BASE_URL + "/tvShow/checkIfCollected";
+
+
     public final static String PIC_URL = BASE_URL + "/pics/";
     public final static String UPLOAD_PIC_URL = BASE_URL + "/upload/picture";
+
     public final static String SEND_ACTIVITY = BASE_URL + "/activity/send";
     public final static String ACTIVITY_IMAGE_URL = BASE_URL;
     public final static String ACTIVITIES_GET = BASE_URL + "/activity/3";

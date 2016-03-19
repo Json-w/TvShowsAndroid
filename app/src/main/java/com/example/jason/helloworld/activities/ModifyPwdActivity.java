@@ -1,5 +1,6 @@
 package com.example.jason.helloworld.activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,10 +33,16 @@ public class ModifyPwdActivity extends AppCompatActivity implements View.OnClick
     private EditText ETOldPwd, ETNewPwd, ETRepeatNewPwd;
     private RequestQueue requestQueue;
     private User user;
+    private ProgressDialog pd;
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-
+            pd.dismiss();
+            switch (msg.what) {
+                case 1:
+                    finish();
+                    break;
+            }
             super.handleMessage(msg);
         }
     };
@@ -81,13 +88,15 @@ public class ModifyPwdActivity extends AppCompatActivity implements View.OnClick
                     Toast.makeText(ModifyPwdActivity.this, "选项不能为空", Toast.LENGTH_LONG).show();
                     return;
                 }
+                pd = ProgressDialog.show(ModifyPwdActivity.this, null, "正在更新，请稍候...");
+                pd.show();
                 updateUser(user);
                 break;
         }
     }
 
     private void updateUser(final User user) {
-        StringRequest updateUserRequest = new StringRequest(Request.Method.POST, TvShowsUrl.USER_INFO_UPDATE, new Response.Listener<String>() {
+        StringRequest updateUserRequest = new StringRequest(Request.Method.POST, TvShowsUrl.USER_MODIFY_PWD, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JSONObject responseJson = null;
@@ -112,11 +121,9 @@ public class ModifyPwdActivity extends AppCompatActivity implements View.OnClick
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("portraitUrl", user.getPortraitUrl());
-                map.put("username", user.getUsername());
-                map.put("email", user.getEmail());
                 map.put("id", user.getId() + "");
-                map.put("password", user.getPassword());
+                map.put("password", ETOldPwd.getText().toString());
+                map.put("newPwd", ETNewPwd.getText().toString());
                 return map;
             }
         };
