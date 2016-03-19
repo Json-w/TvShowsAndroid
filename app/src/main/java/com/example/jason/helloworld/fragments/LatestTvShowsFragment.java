@@ -40,7 +40,7 @@ public class LatestTvShowsFragment extends Fragment implements XListView.IXListV
     private XListView mListView;
     private LatestTvShowRefreshAdapter myAdapter;
     private ArrayList<String> items = new ArrayList<String>();
-    private List<TvShowItem> tvShowItems = new ArrayList<>();
+    protected List<TvShowItem> tvShowItems = new ArrayList<>();
     protected RequestQueue requestQueue;
     private Page page = new Page();
     protected Handler mHandler = new Handler() {

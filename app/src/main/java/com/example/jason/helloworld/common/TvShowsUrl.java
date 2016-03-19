@@ -14,6 +14,7 @@ public class TvShowsUrl {
     public final static String TVSHOWS_URL = BASE_URL + "/tvShow/listLatest";
     public final static String COLLECT_TVSHOW_URL = BASE_URL + "/tvShow";
     public final static String CHECK_IF_TVSHOW_COLLECTED_URL = BASE_URL + "/tvShow/checkIfCollected";
+    public final static String LIST_CHOOSED_TVSHOWS = BASE_URL + "/tvShow/listChooseTvShows";
 
 
     public final static String PIC_URL = BASE_URL + "/pics/";

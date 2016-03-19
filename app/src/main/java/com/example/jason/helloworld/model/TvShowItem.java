@@ -10,11 +10,12 @@ public class TvShowItem implements Serializable {
     private String picUrl;
     private String showPlatform;
     private String type;
+    private String collectedTime;
 
     public TvShowItem() {
     }
 
-    public TvShowItem(String name, String originName, String showTime, String describe, String picUrl, String showPlatform, String type) {
+    public TvShowItem(String name, String originName, String showTime, String describe, String picUrl, String showPlatform, String type, String collectedTime) {
 
         this.name = name;
         this.originName = originName;
@@ -23,6 +24,7 @@ public class TvShowItem implements Serializable {
         this.picUrl = picUrl;
         this.showPlatform = showPlatform;
         this.type = type;
+        this.collectedTime = collectedTime;
     }
 
     public String getName() {
@@ -79,5 +81,13 @@ public class TvShowItem implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCollectedTime() {
+        return collectedTime;
+    }
+
+    public void setCollectedTime(String collectedTime) {
+        this.collectedTime = collectedTime;
     }
 }
