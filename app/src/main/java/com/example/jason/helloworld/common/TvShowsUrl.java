@@ -24,7 +24,7 @@ public class TvShowsUrl {
     public final static String SEND_ACTIVITY = BASE_URL + "/activity/send";
     public final static String DELETE_ACTIVITY = BASE_URL + "/activity/delete";
     public final static String ACTIVITY_IMAGE_URL = BASE_URL;
-    public final static String ACTIVITIES_GET = BASE_URL + "/activity/3";
+    public final static String ACTIVITIES_GET = BASE_URL + "/activity";
     public final static String ACTIVITIES_GET_ALL = BASE_URL + "/activity/all";
     //TODO dynamic generate the user id
 }

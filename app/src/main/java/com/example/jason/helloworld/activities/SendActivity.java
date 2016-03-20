@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.common.DateUtil;
 import com.example.jason.helloworld.common.TvShowsUrl;
@@ -110,7 +111,7 @@ public class SendActivity extends UploadActivity {
         Map<String, String> map = new HashMap<>();
         map.put("content", ETsendContent.getText().toString());
         map.put("releaseTime", DateUtil.dateToStr(new Date()));
-        map.put("userId", "3");
+        map.put("userId", MyApplication.user.getId() + "");
         map.put("picUrl", serverImgUrl);
         return map;
     }

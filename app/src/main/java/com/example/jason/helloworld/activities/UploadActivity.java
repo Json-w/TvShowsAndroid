@@ -29,12 +29,16 @@ import org.json.JSONObject;
 
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public abstract class UploadActivity extends AppCompatActivity {
     private static final int SELECT_PIC_BY_PICK_PHOTO = 0;
@@ -161,6 +165,7 @@ public abstract class UploadActivity extends AppCompatActivity {
             }
         }
 
+
         // 如果图片符合要求将其上传到服务器
         if (picPath != null && (picPath.endsWith(".png") ||
                 picPath.endsWith(".PNG") ||
@@ -170,13 +175,14 @@ public abstract class UploadActivity extends AppCompatActivity {
 
             BitmapFactory.Options option = new BitmapFactory.Options();
             // 压缩图片:表示缩略图大小为原始图片大小的几分之一，1为原图
-            option.inSampleSize = 1;
+            option.inSampleSize = 8;
             // 根据图片的SDCard路径读出Bitmap
             Bitmap bm = BitmapFactory.decodeFile(picPath, option);
             // 显示在图片控件上
             sendImg = getImageView();
             sendImg.setImageBitmap(bm);
-
+            String compressPicPath = setPicToSdcard(bm);
+            picPath = compressPicPath;
             pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
             new Thread(uploadImageRunnable).start();
         } else {
@@ -307,5 +313,33 @@ public abstract class UploadActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "内存卡不存在", Toast.LENGTH_LONG).show();
         }
+    }
+
+    String setPicToSdcard(Bitmap mBitmap) {
+        String path = "/sdcard/tvShows/upload/";
+        String sdStatus = Environment.getExternalStorageState();
+        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
+            return null;
+        }
+        FileOutputStream fos = null;
+        File file = new File(path);
+        file.mkdirs();
+        String fileName = path + "/" + getUserName() + UUID.randomUUID() + ".jpg";
+        try {
+            fos = new FileOutputStream(fileName);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return fileName;
     }
 }

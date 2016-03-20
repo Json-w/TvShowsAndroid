@@ -3,16 +3,27 @@ package com.example.jason.helloworld.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
+import com.example.jason.helloworld.common.TvShowsUrl;
 import com.example.jason.helloworld.model.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,11 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = userInfo.edit();
                 editor.putString("username", "wangpei");
                 editor.putString("password", "123456");
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                MyApplication.user = new User(3, "wangpei", "123456", "", "519875872@qq.com");
-                // TODO: save the user to MyApplication to make sure other activities can invoke.
-                finish();
-               /* StringRequest loginRequest = new StringRequest(Request.Method.POST,
+                StringRequest loginRequest = new StringRequest(Request.Method.POST,
                         TvShowsUrl.LOGIN_URL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -57,6 +64,9 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject responseJson = new JSONObject(response);
                             if (responseJson.getInt("statusCode") == 1) {
                                 myApplication.setToken(responseJson.getJSONObject("data").getString("token"));
+                                JSONObject userJson = responseJson.getJSONObject("data").getJSONObject("user");
+                                User user = parseUserJson(userJson);
+                                MyApplication.user = user;
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
                         } catch (JSONException e) {
@@ -75,9 +85,19 @@ public class LoginActivity extends AppCompatActivity {
                         return getInput();
                     }
                 };
-                requestQueue.add(loginRequest);*/
+                requestQueue.add(loginRequest);
             }
         });
+    }
+
+    @NonNull
+    private User parseUserJson(JSONObject userJson) throws JSONException {
+        User user = new User();
+        user.setId(userJson.getInt("id"));
+        user.setUsername(userJson.getString("username"));
+        user.setEmail(userJson.getString("email"));
+        user.setPortraitUrl(userJson.getString("portraitUrl"));
+        return user;
     }
 
     private Map<String, String> getInput() {

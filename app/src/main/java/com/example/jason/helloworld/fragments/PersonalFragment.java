@@ -86,7 +86,7 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     private void fetchUserInfoAndSetToUI(RequestQueue requestQueue) {
-        StringRequest userInfoRequest = new StringRequest(TvShowsUrl.USER_INFO_URL + "3", new Response.Listener<String>() {
+        StringRequest userInfoRequest = new StringRequest(TvShowsUrl.USER_INFO_URL + MyApplication.user.getId(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -121,7 +121,7 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     private void fetchDataFromInternet(RequestQueue requestQueue) {
-        StringRequest getActivitiesRequest = new StringRequest(TvShowsUrl.ACTIVITIES_GET + "?page=" + page.getNumber() + "&size=" + page.getSize(), new Response.Listener<String>() {
+        StringRequest getActivitiesRequest = new StringRequest(TvShowsUrl.ACTIVITIES_GET + "/" + MyApplication.user.getId() + "?page=" + page.getNumber() + "&size=" + page.getSize(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
