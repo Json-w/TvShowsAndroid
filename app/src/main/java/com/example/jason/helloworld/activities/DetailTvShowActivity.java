@@ -53,7 +53,28 @@ public class DetailTvShowActivity extends AppCompatActivity implements View.OnCl
                     favoraiteBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            pd = ProgressDialog.show(DetailTvShowActivity.this, null, "正在收藏,请稍候...");
+                            pd.show();
+                            try {
+                                cancleCollectedTvShow();
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    break;
+                case 2:
+                    favoraiteBtn.setText("收藏");
+                    favoraiteBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            pd = ProgressDialog.show(DetailTvShowActivity.this, null, "正在收藏,请稍候...");
+                            pd.show();
+                            try {
+                                collectTvShow();
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                     break;
@@ -175,5 +196,27 @@ public class DetailTvShowActivity extends AppCompatActivity implements View.OnCl
             }
         });
         requestQueue.add(checkIfCollectedRequest);
+    }
+
+    private void cancleCollectedTvShow() throws UnsupportedEncodingException {
+        StringRequest cancleCollectedTvShow = new StringRequest(bindParamsToUrl(TvShowsUrl.CANCLE_COLLECT_TVSHOW_URL,
+                new String[]{tvShowItem.getName(), MyApplication.user.getId() + ""}), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    if (new JSONObject(response).getInt("statusCode") == 1) {
+                        myHandler.sendEmptyMessage(2);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                myHandler.sendEmptyMessage(0);
+            }
+        });
+        requestQueue.add(cancleCollectedTvShow);
     }
 }

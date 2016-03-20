@@ -136,6 +136,7 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
                         for (int i = 0; i < contentJsonArr.length(); i++) {
                             JSONObject itemJson = contentJsonArr.getJSONObject(i);
                             TvShowActivity tvShowActivityItem = new TvShowActivity();
+                            tvShowActivityItem.setId(itemJson.getInt("id"));
                             tvShowActivityItem.setContent(itemJson.getString("content"));
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTimeInMillis(itemJson.getLong("releaseTime"));

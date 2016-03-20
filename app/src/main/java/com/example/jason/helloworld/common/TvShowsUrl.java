@@ -13,6 +13,7 @@ public class TvShowsUrl {
 
     public final static String TVSHOWS_URL = BASE_URL + "/tvShow/listLatest";
     public final static String COLLECT_TVSHOW_URL = BASE_URL + "/tvShow";
+    public final static String CANCLE_COLLECT_TVSHOW_URL = BASE_URL + "/tvShow/deleteChooseTvShow";
     public final static String CHECK_IF_TVSHOW_COLLECTED_URL = BASE_URL + "/tvShow/checkIfCollected";
     public final static String LIST_CHOOSED_TVSHOWS = BASE_URL + "/tvShow/listChooseTvShows";
 
@@ -21,6 +22,7 @@ public class TvShowsUrl {
     public final static String UPLOAD_PIC_URL = BASE_URL + "/upload/picture";
 
     public final static String SEND_ACTIVITY = BASE_URL + "/activity/send";
+    public final static String DELETE_ACTIVITY = BASE_URL + "/activity/delete";
     public final static String ACTIVITY_IMAGE_URL = BASE_URL;
     public final static String ACTIVITIES_GET = BASE_URL + "/activity/3";
     public final static String ACTIVITIES_GET_ALL = BASE_URL + "/activity/all";
