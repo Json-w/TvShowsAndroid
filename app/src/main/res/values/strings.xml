@@ -38,4 +38,6 @@
     <string name="title_activity_modify_user_base_info">ModifyUserBaseInfoActivity</string>
 
     <string name="title_activity_modify_email">ModifyEmailActivity</string>
+
+    <string name="title_activity_welcome">WelcomeActivity</string>
 </resources>

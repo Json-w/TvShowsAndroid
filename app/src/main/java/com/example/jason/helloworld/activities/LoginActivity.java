@@ -25,6 +25,7 @@ import com.example.jason.helloworld.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,10 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences userInfo = getSharedPreferences("userInfo", 0);
-                SharedPreferences.Editor editor = userInfo.edit();
-                editor.putString("username", "wangpei");
-                editor.putString("password", "123456");
                 StringRequest loginRequest = new StringRequest(Request.Method.POST,
                         TvShowsUrl.LOGIN_URL, new Response.Listener<String>() {
                     @Override
@@ -67,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject userJson = responseJson.getJSONObject("data").getJSONObject("user");
                                 User user = parseUserJson(userJson);
                                 MyApplication.user = user;
+                                saveUserAndTokenInfoAtLocale(user);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
                         } catch (JSONException e) {
@@ -88,6 +86,18 @@ public class LoginActivity extends AppCompatActivity {
                 requestQueue.add(loginRequest);
             }
         });
+    }
+
+    private void saveUserAndTokenInfoAtLocale(User user) {
+        SharedPreferences userInfo = getSharedPreferences("userInfo", 0);
+        SharedPreferences.Editor editor = userInfo.edit();
+        editor.putString("username", user.getUsername());
+        editor.putString("password", user.getPassword());
+        editor.putInt("id", user.getId());
+        editor.putString("email", user.getEmail());
+        editor.putString("token", myApplication.getToken());
+        editor.putLong("loginTime", new Date().getTime());
+        editor.commit();
     }
 
     @NonNull
