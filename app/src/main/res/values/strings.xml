@@ -20,7 +20,7 @@
     <string name="header_hint_refresh_time">Time：</string>
     <string name="footer_hint_load_normal">Load more</string>
     <string name="footer_hint_load_ready">Release to load more</string>
-    <string name="following">Following:</string>
+    <string name="followingUser">Following:</string>
     <string name="followers">followers:</string>
 
     <string name="title_activity_detail_tv_show_activityd">DetailTvShowActivityd</string>
@@ -40,4 +40,6 @@
     <string name="title_activity_modify_email">ModifyEmailActivity</string>
 
     <string name="title_activity_welcome">WelcomeActivity</string>
+
+    <string name="title_activity_follwers">FollwersActivity</string>
 </resources>

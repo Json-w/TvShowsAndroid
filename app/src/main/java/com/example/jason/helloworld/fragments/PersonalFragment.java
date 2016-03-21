@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.activities.DetailActivity;
+import com.example.jason.helloworld.activities.FollowingActivity;
 import com.example.jason.helloworld.activities.SendActivity;
 import com.example.jason.helloworld.activities.UserInfoActivity;
 import com.example.jason.helloworld.adapters.PersonalGridViewAdapter;
@@ -80,6 +81,12 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), UserInfoActivity.class).putExtra("user", user));
+            }
+        });
+        TVFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), FollowingActivity.class));
             }
         });
         return view;
@@ -165,7 +172,7 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
         gridView = (GridView) view.findViewById(R.id.gridview);
         IVPortrait = (ImageView) view.findViewById(R.id.portrait_img);
         TVUsername = (TextView) view.findViewById(R.id.personal_fragment_username);
-        TVFollowing = (TextView) view.findViewById(R.id.following);
+        TVFollowing = (TextView) view.findViewById(R.id.followingUser);
         TVFollowers = (TextView) view.findViewById(R.id.followers);
     }
 

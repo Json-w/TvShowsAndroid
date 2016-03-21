@@ -24,7 +24,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activities.LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activities.SendActivity"
             android:label="@string/title_activity_send"
@@ -60,6 +60,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.FollowersActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_follwers"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".activities.FollowingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_follwers"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>
