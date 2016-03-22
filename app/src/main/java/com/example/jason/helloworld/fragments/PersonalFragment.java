@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.activities.DetailActivity;
+import com.example.jason.helloworld.activities.FollowersActivity;
 import com.example.jason.helloworld.activities.FollowingActivity;
 import com.example.jason.helloworld.activities.SendActivity;
 import com.example.jason.helloworld.activities.UserInfoActivity;
@@ -45,6 +47,7 @@ import java.util.List;
 public class PersonalFragment extends Fragment implements AdapterView.OnItemClickListener {
     private GridView gridView;
     private ImageView IVPortrait;
+    private LinearLayout llFollowingUser, llFollowerUser;
     private TextView TVUsername, TVFollowing, TVFollowers;
     private PersonalGridViewAdapter mAdapter;
     private List<TvShowActivity> datas;
@@ -83,10 +86,16 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
                 startActivity(new Intent(getContext(), UserInfoActivity.class).putExtra("user", user));
             }
         });
-        TVFollowing.setOnClickListener(new View.OnClickListener() {
+        llFollowingUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), FollowingActivity.class));
+            }
+        });
+        llFollowerUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), FollowersActivity.class));
             }
         });
         return view;
@@ -174,6 +183,8 @@ public class PersonalFragment extends Fragment implements AdapterView.OnItemClic
         TVUsername = (TextView) view.findViewById(R.id.personal_fragment_username);
         TVFollowing = (TextView) view.findViewById(R.id.followingUser);
         TVFollowers = (TextView) view.findViewById(R.id.followers);
+        llFollowingUser = (LinearLayout) view.findViewById(R.id.line_followingUser);
+        llFollowerUser = (LinearLayout) view.findViewById(R.id.line_followerUser);
     }
 
     @Override

@@ -18,7 +18,8 @@ public class TvShowsUrl {
     public final static String LIST_CHOOSED_TVSHOWS = BASE_URL + "/tvShow/listChooseTvShows";
 
     public final static String FIND_FOLLOWING = BASE_URL + "/follower/following";
-    public final static String FIND_FOLLOWER = BASE_URL + "/follower/following";
+    public final static String FIND_FOLLOWER = BASE_URL + "/follower/follower";
+    public final static String CANCEL_FOLLOW = BASE_URL + "/follower";
 
     public final static String PIC_URL = BASE_URL + "/pics/";
     public final static String UPLOAD_PIC_URL = BASE_URL + "/upload/picture";

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ public class FollowingActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private ListView listvie;
     private FollowingAdapter followingAdapter;
+    private Button backBtn;
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -42,12 +45,19 @@ public class FollowingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_follwers);
+        setContentView(R.layout.activity_following);
         listvie = (ListView) this.findViewById(R.id.following_list_view);
+        backBtn = (Button) this.findViewById(R.id.following_back_button);
         requestQueue = Volley.newRequestQueue(this);
         fetchFollowing();
         followingAdapter = new FollowingAdapter(data, requestQueue);
         listvie.setAdapter(followingAdapter);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void fetchFollowing() {

@@ -1,5 +1,7 @@
 package com.example.jason.helloworld.adapters;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +11,20 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.StringRequest;
 import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.common.BitmapCache;
+import com.example.jason.helloworld.common.TvShowsUrl;
 import com.example.jason.helloworld.model.Following;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -23,9 +33,11 @@ public class FollowingAdapter extends BaseAdapter {
     private ListView listView;
     private ImageLoader imageLoader;
     private BitmapCache bitmapCache;
+    private RequestQueue requestQueue;
 
     public FollowingAdapter(List<Following> datas, RequestQueue requestQueue) {
         this.datas = datas;
+        this.requestQueue = requestQueue;
         bitmapCache = MyApplication.getInstance().getBitmapCache();
         imageLoader = new ImageLoader(requestQueue, bitmapCache);
     }
@@ -46,7 +58,7 @@ public class FollowingAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         if (listView == null) {
             listView = (ListView) parent;
         }
@@ -59,14 +71,57 @@ public class FollowingAdapter extends BaseAdapter {
             viewHolder.followingBtn = (Button) convertView.findViewById(R.id.followers_btn);
             convertView.setTag(viewHolder);
         } else {
-            convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        Following following = datas.get(position);
+        final Following following = datas.get(position);
         ImageLoader.ImageListener portraitImageListener = ImageLoader.getImageListener(viewHolder.portraitImg, R.drawable.ic_launcher, R.drawable.ic_launcher);
         imageLoader.get(following.getFollowingUser().getPortraitUrl(), portraitImageListener);
         viewHolder.username.setText(following.getFollowingUser().getUsername());
         viewHolder.followingBtn.setText("following");
+        final ViewHolder finalViewHolder = viewHolder;
+        viewHolder.followingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(parent.getContext())
+                        .setTitle("确定不再关注？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                cancelFollow(following.getId(), finalViewHolder.followingBtn);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
+        });
         return convertView;
+    }
+
+    private void cancelFollow(int id, final Button followingBtn) {
+        StringRequest cancelFollowRequest = new StringRequest(Request.Method.DELETE, TvShowsUrl.CANCEL_FOLLOW + "/" + id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    if (new JSONObject(response).getInt("statusCode") == 1) {
+                        followingBtn.setText("follow");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(cancelFollowRequest);
     }
 
     class ViewHolder {
