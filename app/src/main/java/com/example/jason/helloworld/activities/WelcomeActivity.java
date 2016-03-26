@@ -27,6 +27,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
                 }
             }, 3000);
+            finish();
             return;
         }
         if (userInfo != null) {
@@ -39,6 +40,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             }
         }, 3000);
+        finish();
     }
 
     @NonNull

@@ -1,6 +1,7 @@
 package com.example.jason.helloworld.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class TvShowActivity implements Serializable {
     private int id;
@@ -10,11 +11,12 @@ public class TvShowActivity implements Serializable {
     private String content;
     private String username;
     private String userPortraitUrl;
+    private List<Comment> comments;
 
     public TvShowActivity() {
     }
 
-    public TvShowActivity(int id, int userId, String pictureUrl, String releaseTime, String content, String username, String userPortraitUrl) {
+    public TvShowActivity(int id, int userId, String pictureUrl, String releaseTime, String content, String username, String userPortraitUrl, List<Comment> comments) {
         this.id = id;
         this.userId = userId;
         this.pictureUrl = pictureUrl;
@@ -22,6 +24,7 @@ public class TvShowActivity implements Serializable {
         this.content = content;
         this.username = username;
         this.userPortraitUrl = userPortraitUrl;
+        this.comments = comments;
     }
 
     public int getId() {
@@ -78,5 +81,13 @@ public class TvShowActivity implements Serializable {
 
     public void setUserPortraitUrl(String userPortraitUrl) {
         this.userPortraitUrl = userPortraitUrl;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

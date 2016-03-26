@@ -16,6 +16,7 @@ public class TvShowsUrl {
     public final static String CANCLE_COLLECT_TVSHOW_URL = BASE_URL + "/tvShow/deleteChooseTvShow";
     public final static String CHECK_IF_TVSHOW_COLLECTED_URL = BASE_URL + "/tvShow/checkIfCollected";
     public final static String LIST_CHOOSED_TVSHOWS = BASE_URL + "/tvShow/listChooseTvShows";
+    public final static String COMMENT_ACTIVITY = BASE_URL + "/activity/comments/comment";
 
     public final static String FIND_FOLLOWING = BASE_URL + "/follower/following";
     public final static String FIND_FOLLOWER = BASE_URL + "/follower/follower";

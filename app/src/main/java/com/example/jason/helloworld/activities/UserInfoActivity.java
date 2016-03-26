@@ -162,7 +162,7 @@ public class UserInfoActivity extends UploadActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.user_info_logout:
-                showDialog();
+                showLogoutDiaglog();
                 break;
         }
     }
@@ -174,10 +174,10 @@ public class UserInfoActivity extends UploadActivity implements View.OnClickList
         editor.commit();
         finish();
         startActivity(new Intent(UserInfoActivity.this, LoginActivity.class));
-
+        MyApplication.destroyAddedActivity();
     }
 
-    void showDialog() {
+    void showLogoutDiaglog() {
         new AlertDialog.Builder(this)
                 .setTitle("确定注销?")
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {

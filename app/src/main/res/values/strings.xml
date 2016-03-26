@@ -42,4 +42,9 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
 
     <string name="title_activity_follwers">FollwersActivity</string>
+    <string name="title_activity_test_comment_acitivity">TestCommentAcitivity</string>
+
+    <string name="title_activity_comments">CommentsActivity</string>
+
+    <string name="title_activity_person_page">PersonPage</string>
 </resources>

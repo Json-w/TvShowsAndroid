@@ -64,11 +64,21 @@
             android:name=".activities.FollowersActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_follwers"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activities.FollowingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_follwers"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activities.CommentsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_comments"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activities.PersonPageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_person_page"
             android:theme="@style/FullscreenTheme"></activity>
     </application>
 

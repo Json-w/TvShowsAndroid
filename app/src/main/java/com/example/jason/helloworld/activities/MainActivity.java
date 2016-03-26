@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.fragments.MyFragmentPagerAdapter;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MyApplication.addDestoryActivity(this, "mainActivity");
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         bindViews();
         rb_channel.setChecked(true);

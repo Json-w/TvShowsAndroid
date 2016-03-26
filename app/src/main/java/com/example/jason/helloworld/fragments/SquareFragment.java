@@ -19,8 +19,10 @@ import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.adapters.ActivitiesRefreshAdapter;
 import com.example.jason.helloworld.common.DateUtil;
 import com.example.jason.helloworld.common.TvShowsUrl;
+import com.example.jason.helloworld.model.Comment;
 import com.example.jason.helloworld.model.Page;
 import com.example.jason.helloworld.model.TvShowActivity;
+import com.example.jason.helloworld.model.User;
 import com.example.jason.helloworld.widget.XListView;
 
 import org.json.JSONArray;
@@ -62,7 +64,6 @@ public class SquareFragment extends Fragment implements XListView.IXListViewList
         xListView.setXListViewListener(this);
         return view;
     }
-
 
 
     @Override
@@ -111,6 +112,22 @@ public class SquareFragment extends Fragment implements XListView.IXListViewList
                             JSONObject user = activityJson.getJSONObject("user");
                             tvShowActivity.setUsername(user.getString("username"));
                             tvShowActivity.setUserPortraitUrl(TvShowsUrl.BASE_URL + user.getString("portraitUrl"));
+
+                            JSONArray commentsJsonArr = activityJson.getJSONArray("comments");
+                            List<Comment> comments = new ArrayList<>();
+                            for (int j = 0; j < commentsJsonArr.length(); j++) {
+                                JSONObject commentJson = commentsJsonArr.getJSONObject(j);
+                                JSONObject commentUserJson = commentJson.getJSONObject("commentUser");
+                                User commentUser = new User();
+                                commentUser.setId(commentUserJson.getInt("id"));
+                                commentUser.setUsername(commentUserJson.getString("username"));
+                                Comment comment = new Comment();
+                                comment.setId(commentJson.getInt("id"));
+                                comment.setContent(commentJson.getString("commentContent"));
+                                comment.setCommentUser(commentUser);
+                                comments.add(comment);
+                            }
+                            tvShowActivity.setComments(comments);
                             datas.add(tvShowActivity);
                         }
                     }
