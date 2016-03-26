@@ -177,6 +177,10 @@ public abstract class UploadActivity extends AppCompatActivity {
             // 压缩图片:表示缩略图大小为原始图片大小的几分之一，1为原图
             option.inSampleSize = 8;
             // 根据图片的SDCard路径读出Bitmap
+            File file = new File(picPath);
+            if (file.length() < 200 * 1024) {
+                option.inSampleSize = 1;
+            }
             Bitmap bm = BitmapFactory.decodeFile(picPath, option);
             // 显示在图片控件上
             sendImg = getImageView();

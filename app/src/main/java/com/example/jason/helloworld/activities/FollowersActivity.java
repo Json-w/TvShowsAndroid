@@ -18,7 +18,7 @@ import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.adapters.FollowersAdapter;
 import com.example.jason.helloworld.common.TvShowsUrl;
-import com.example.jason.helloworld.model.Following;
+import com.example.jason.helloworld.model.Follower;
 import com.example.jason.helloworld.model.User;
 
 import org.json.JSONArray;
@@ -30,9 +30,9 @@ import java.util.List;
 
 public class FollowersActivity extends AppCompatActivity {
 
-    private List<Following> data = new ArrayList<>();
+    private List<Follower> data = new ArrayList<>();
     private RequestQueue requestQueue;
-    private ListView listvie;
+    private ListView listView;
     private FollowersAdapter followersAdapter;
     private Button backBtn;
     private Handler myHandler = new Handler() {
@@ -46,13 +46,13 @@ public class FollowersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_following);
-        listvie = (ListView) this.findViewById(R.id.following_list_view);
-        backBtn = (Button) this.findViewById(R.id.following_back_button);
+        setContentView(R.layout.activity_follower);
+        listView = (ListView) this.findViewById(R.id.follower_list_view);
+        backBtn = (Button) this.findViewById(R.id.follower_back_button);
         requestQueue = Volley.newRequestQueue(this);
         fetchFollowing();
         followersAdapter = new FollowersAdapter(data, requestQueue);
-        listvie.setAdapter(followersAdapter);
+        listView.setAdapter(followersAdapter);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +71,8 @@ public class FollowersActivity extends AppCompatActivity {
                         JSONArray dataJson = responseJson.getJSONArray("data");
                         for (int i = 0; i < dataJson.length(); i++) {
                             JSONObject itemJson = dataJson.getJSONObject(i);
-                            Following following = new Following();
-                            following.setId(itemJson.getInt("id"));
+                            Follower follower = new Follower();
+                            follower.setId(itemJson.getInt("id"));
                             User user = new User();
                             JSONObject userJson = itemJson.getJSONObject("follower");
                             user.setId(userJson.getInt("id"));
@@ -80,8 +80,9 @@ public class FollowersActivity extends AppCompatActivity {
                             user.setEmail(userJson.getString("email"));
                             String prePicUrl = userJson.getString("portraitUrl");
                             user.setPortraitUrl(TvShowsUrl.PIC_URL + prePicUrl.substring(prePicUrl.lastIndexOf("/") + 1));
-                            following.setFollowingUser(user);
-                            data.add(following);
+                            follower.setFollower(user);
+                            follower.setInterFollow(itemJson.getBoolean("interFollow"));
+                            data.add(follower);
                         }
                     }
                     myHandler.sendEmptyMessage(1);

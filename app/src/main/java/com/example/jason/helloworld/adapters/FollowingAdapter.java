@@ -77,7 +77,7 @@ public class FollowingAdapter extends BaseAdapter {
         ImageLoader.ImageListener portraitImageListener = ImageLoader.getImageListener(viewHolder.portraitImg, R.drawable.ic_launcher, R.drawable.ic_launcher);
         imageLoader.get(following.getFollowingUser().getPortraitUrl(), portraitImageListener);
         viewHolder.username.setText(following.getFollowingUser().getUsername());
-        viewHolder.followingBtn.setText("following");
+        viewHolder.followingBtn.setText("已关注");
         final ViewHolder finalViewHolder = viewHolder;
         viewHolder.followingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +109,7 @@ public class FollowingAdapter extends BaseAdapter {
             public void onResponse(String response) {
                 try {
                     if (new JSONObject(response).getInt("statusCode") == 1) {
-                        followingBtn.setText("follow");
+                        followingBtn.setText("关注");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

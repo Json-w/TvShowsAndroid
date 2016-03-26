@@ -19,7 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        SharedPreferences userInfo = getSharedPreferences("userInfo", 0);
+        SharedPreferences userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);
         if (userInfo.getString("token", "").equals("")) {
             myHandler.postDelayed(new Runnable() {
                 @Override
@@ -28,6 +28,9 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }, 3000);
             return;
+        }
+        if (userInfo != null) {
+
         }
         MyApplication.user = getUserFromSharedPreferences(userInfo);
         myHandler.postDelayed(new Runnable() {

@@ -6,6 +6,7 @@ public class Following implements Serializable {
     private int id;
     private User user;
     private User followingUser;
+    private boolean interFollow;
 
     public Following() {
     }
@@ -38,5 +39,13 @@ public class Following implements Serializable {
 
     public void setFollowingUser(User followingUser) {
         this.followingUser = followingUser;
+    }
+
+    public boolean isInterFollow() {
+        return interFollow;
+    }
+
+    public void setInterFollow(boolean interFollow) {
+        this.interFollow = interFollow;
     }
 }

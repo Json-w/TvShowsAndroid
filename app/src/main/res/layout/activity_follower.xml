@@ -11,7 +11,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/following_back_button"
+            android:id="@+id/follower_back_button"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
@@ -27,13 +27,13 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="关注"
+            android:text="粉丝"
             android:textSize="25sp" />
 
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/following_list_view"
+        android:id="@+id/follower_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="#00000000" />

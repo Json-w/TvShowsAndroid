@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,21 +22,23 @@ import com.example.jason.helloworld.MyApplication;
 import com.example.jason.helloworld.R;
 import com.example.jason.helloworld.common.BitmapCache;
 import com.example.jason.helloworld.common.TvShowsUrl;
-import com.example.jason.helloworld.model.Following;
+import com.example.jason.helloworld.model.Follower;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FollowersAdapter extends BaseAdapter {
-    private List<Following> datas;
+    private List<Follower> datas;
     private ListView listView;
     private ImageLoader imageLoader;
     private BitmapCache bitmapCache;
     private RequestQueue requestQueue;
 
-    public FollowersAdapter(List<Following> datas, RequestQueue requestQueue) {
+    public FollowersAdapter(List<Follower> datas, RequestQueue requestQueue) {
         this.datas = datas;
         this.requestQueue = requestQueue;
         bitmapCache = MyApplication.getInstance().getBitmapCache();
@@ -73,56 +76,148 @@ public class FollowersAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final Following following = datas.get(position);
+        final Follower follower = datas.get(position);
         ImageLoader.ImageListener portraitImageListener = ImageLoader.getImageListener(viewHolder.portraitImg, R.drawable.ic_launcher, R.drawable.ic_launcher);
-        imageLoader.get(following.getFollowingUser().getPortraitUrl(), portraitImageListener);
-        viewHolder.username.setText(following.getFollowingUser().getUsername());
-        viewHolder.followingBtn.setText("following");
+        imageLoader.get(follower.getFollower().getPortraitUrl(), portraitImageListener);
+        viewHolder.username.setText(follower.getFollower().getUsername());
         final ViewHolder finalViewHolder = viewHolder;
-        viewHolder.followingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(parent.getContext())
-                        .setTitle("确定不再关注？")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                cancelFollow(following.getId(), finalViewHolder.followingBtn);
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        if (follower.isInterFollow()) {
+            viewHolder.followingBtn.setText("已关注");
+            viewHolder.followingBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(parent.getContext())
+                            .setTitle("确定不再关注？")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    StringRequest cancelFollowRequest = new StringRequest(Request.Method.DELETE, TvShowsUrl.CANCEL_FOLLOW + "/" + follower.getId(), new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                if (new JSONObject(response).getInt("statusCode") == 1) {
+                                                    finalViewHolder.followingBtn.setText("关注");
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-                                dialog.dismiss();
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+
+                                        }
+                                    });
+                                    requestQueue.add(cancelFollowRequest);
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // TODO Auto-generated method stub
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                }
+            });
+        } else {
+            viewHolder.followingBtn.setText("关注");
+            viewHolder.followingBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    StringRequest followRequest = new StringRequest(Request.Method.POST, TvShowsUrl.ADD_FOLLOW, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                if (new JSONObject(response).getInt("statusCode") == 1) {
+                                    finalViewHolder.followingBtn.setText("已关注");
+                                    finalViewHolder.followingBtn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            new AlertDialog.Builder(parent.getContext())
+                                                    .setTitle("确定不再关注？")
+                                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            StringRequest cancelFollowRequest = new StringRequest(Request.Method.DELETE, TvShowsUrl.CANCEL_FOLLOW + "/" + follower.getId(), new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String response) {
+                                                                    try {
+                                                                        if (new JSONObject(response).getInt("statusCode") == 1) {
+                                                                            finalViewHolder.followingBtn.setText("关注");
+                                                                        }
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
+                                                                    }
+                                                                }
+                                                            }, new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+
+                                                                }
+                                                            });
+                                                            requestQueue.add(cancelFollowRequest);
+                                                        }
+                                                    })
+                                                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            // TODO Auto-generated method stub
+                                                            dialog.dismiss();
+                                                        }
+                                                    }).show();
+                                        }
+                                    });
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        }).show();
-            }
-        });
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("userId", follower.getFollower().getId() + "");
+                            params.put("followerUserId", MyApplication.user.getId() + "");
+                            return params;
+                        }
+                    };
+                    requestQueue.add(followRequest);
+                }
+            });
+        }
+
         return convertView;
     }
 
-    private void cancelFollow(int id, final Button followingBtn) {
-        StringRequest cancelFollowRequest = new StringRequest(Request.Method.DELETE, TvShowsUrl.CANCEL_FOLLOW + "/" + id, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    if (new JSONObject(response).getInt("statusCode") == 1) {
-                        followingBtn.setText("follow");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(cancelFollowRequest);
-    }
+//    private void cancelFollow(int id, final Button followingBtn) {
+//        StringRequest cancelFollowRequest = new StringRequest(Request.Method.DELETE, TvShowsUrl.CANCEL_FOLLOW + "/" + id, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    if (new JSONObject(response).getInt("statusCode") == 1) {
+//                        followingBtn.setText("关注");
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        requestQueue.add(cancelFollowRequest);
+//    }
 
     class ViewHolder {
         ImageView portraitImg;

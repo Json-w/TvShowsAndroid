@@ -77,8 +77,7 @@ public class FollowingActivity extends AppCompatActivity {
                             user.setId(userJson.getInt("id"));
                             user.setUsername(userJson.getString("username"));
                             user.setEmail(userJson.getString("email"));
-                            String prePicUrl = userJson.getString("portraitUrl");
-                            user.setPortraitUrl(TvShowsUrl.PIC_URL + prePicUrl.substring(prePicUrl.lastIndexOf("/") + 1));
+                            user.setPortraitUrl(TvShowsUrl.BASE_URL + userJson.getString("portraitUrl"));
                             following.setFollowingUser(user);
                             data.add(following);
                         }
