@@ -67,9 +67,9 @@ public class LatestTvShowRefreshAdapter extends BaseAdapter {
         TvShowItem tvShowItem = datas.get(position);
         viewHolder.txName.setText(tvShowItem.getName() + "(" + tvShowItem.getOriginName() + ")");
         viewHolder.txShowTime.setText(tvShowItem.getShowTime());
-        viewHolder.txDescribe.setText(tvShowItem.getDescribe());
+        viewHolder.txDescribe.setText("\t\t" + tvShowItem.getDescribe());
         if (tvShowItem.getPicUrl() != null && !tvShowItem.getPicUrl().equals("")) {
-            ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(viewHolder.tvShowPic, R.drawable.ic_launcher, R.drawable.ic_launcher);
+            ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(viewHolder.tvShowPic, R.mipmap.icon, R.mipmap.load_image_failed);
             imageLoader.get(tvShowItem.getPicUrl(), imageListener);
         }
         return convertView;

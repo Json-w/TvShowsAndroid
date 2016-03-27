@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="3dp">
 
 
     <ImageView
         android:id="@+id/item_tvShowPic"
         android:layout_width="80dp"
         android:layout_height="130dp"
-        android:src="@drawable/ic_launcher" />
+        android:src="@mipmap/loading_image" />
 
     <TextView
         android:id="@+id/item_tvShowName"
@@ -18,8 +19,9 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/item_tvShowPic"
         android:layout_toRightOf="@+id/item_tvShowPic"
-        android:singleLine="true"
         android:ellipsize="end"
+        android:paddingLeft="3dp"
+        android:singleLine="true"
         android:text="name"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/bg_black" />
@@ -31,6 +33,7 @@
         android:layout_below="@+id/item_tvShowName"
         android:layout_toEndOf="@+id/item_tvShowPic"
         android:layout_toRightOf="@+id/item_tvShowPic"
+        android:paddingLeft="3dp"
         android:text="showTime"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/bg_black" />
@@ -44,6 +47,7 @@
         android:layout_toRightOf="@+id/item_tvShowPic"
         android:ellipsize="end"
         android:lines="4"
+        android:paddingLeft="3dp"
         android:text="describe"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/bg_black" />

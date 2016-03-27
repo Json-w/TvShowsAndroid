@@ -7,17 +7,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@mipmap/title">
 
         <Button
             android:id="@+id/user_info_back_button"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:text="返回" />
+            android:background="@drawable/tab_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,12 +37,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <LinearLayout
             android:id="@+id/user_info_portrait_line"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:background="@mipmap/edit_text_background"
             android:orientation="horizontal">
 
             <TextView
@@ -64,7 +69,9 @@
         <LinearLayout
             android:id="@+id/user_info_username_line"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@mipmap/up">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,7 +92,8 @@
         <LinearLayout
             android:id="@+id/user_info_email_line"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:background="@mipmap/middle">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,7 +114,8 @@
         <LinearLayout
             android:id="@+id/user_info_change_pwd"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:background="@mipmap/bottom">
 
             <TextView
                 android:layout_width="wrap_content"
